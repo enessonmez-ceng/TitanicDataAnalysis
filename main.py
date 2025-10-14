@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import statistics
 
-# En çok tercih edilen ajanlar /// Ajan türü nün kda ya etkisi
+
 
 
 df = pd.read_csv("Data/titanic/train.csv")
