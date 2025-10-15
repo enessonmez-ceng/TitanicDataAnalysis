@@ -6,8 +6,6 @@ kullanılarak gerçekleştirilmiş bir veri analizi ve makine öğrenmesi
 yolcunun hayatta kalıp kalmayacağını tahmin eden bir model
 geliştirmektir.
 
-**1. 📥 Veri Setini Tanıt**
-
 **Veri Setinin Hikayesi**
 
 Bu proje, 15 Nisan 1912'de bir buzdağına çarparak batan RMS Titanic
@@ -43,7 +41,7 @@ adımlarını uygulamak için bir standart olarak kabul edilir.
 
 -   Cabin: Yolcunun kabin numarası.
 
-**2. 🔍 Temel Veri Analizi (EDA)**
+**🔍 Temel Veri Analizi (EDA)**
 
 **Özet İstatistikler ve Eksik Değer Analizi**
 
@@ -74,7 +72,7 @@ inceleme yapıldı.
     yüksek ücretler, aykırı değer (outlier) olarak değerlendirilebilecek
     potansiyele sahipti.
 
-**3. 📊 Veri Görselleştirme**
+**📊 Veri Görselleştirme**
 
 Proje kapsamında veri içindeki desenleri ve ilişkileri daha iyi anlamak
 için çeşitli görselleştirmeler yapıldı:
@@ -99,7 +97,7 @@ için çeşitli görselleştirmeler yapıldı:
         çocukların hayatta kalma oranının diğer yaş gruplarına göre daha
         yüksek olduğunu gösterdi.
 
-**4. 🧹 Veri Ön İşleme**
+**🧹 Veri Ön İşleme**
 
 Modeli eğitmeden önce veri seti üzerinde aşağıdaki ön işleme adımları
 uygulandı:
@@ -125,7 +123,7 @@ uygulandı:
     -   SibSp ve Parch sütunları birleştirilerek FamilySize adında yeni
         bir özellik türetildi.
 
-**5. 🤖 Basit Bir Modelleme**
+**🤖 Basit Bir Modelleme**
 
 **Model ve Değerlendirme Yöntemi**
 
@@ -169,7 +167,7 @@ Test seti üzerinde elde edilen sonuçlar aşağıdaki gibidir:
         daha başarılı olduğunu, ancak hayatta kalanları tespit etmede
         (recall=0.72) biraz daha zayıf kaldığını göstermektedir.
 
-**6. 📈 Sonuçların Yorumlanması**
+**📈 Sonuçların Yorumlanması**
 
 **Modelin Değerlendirmesi**
 
