@@ -117,21 +117,21 @@ Proje kapsamında **visualization.py** dosyasında çeşitli görselleştirmeler
 -   **Çok Değişkenli Analiz:**
 
     -   **Cinsiyet ve Hayatta Kalma:**
-        ![Grafik 1](./images.figure_1.png)
+        ![Grafik 1](./images.Figure_1.png)
         Cinsiyete göre hayatta kalma
         oranlarını gösteren grafik, kadınların hayatta kalma şansının
         erkeklere göre çok daha yüksek olduğunu net bir şekilde ortaya
         koyuyor.
 
     -   **Sınıf ve Hayatta Kalma:**
-        ![Grafik 2](./images.figure_2.png)
+        ![Grafik 2](./images.Figure_2.png)
         Yolcu sınıfına göre hayatta kalma
         oranları incelendiğinde, 1. sınıf yolcuların hayatta kalma
         oranının 3. sınıf yolculara kıyasla belirgin şekilde daha yüksek
         olduğu gözlemlendi.
 
     -   **Yaş ve Hayatta Kalma:**
-        ![Grafik 3](./images.figure_3.png)
+        ![Grafik 3](./images.Figure_3.png)
         Yaş dağılımı grafiği, özellikle küçük
         çocukların hayatta kalma oranının diğer yaş gruplarına göre daha
         yüksek olduğunu gösterdi.
