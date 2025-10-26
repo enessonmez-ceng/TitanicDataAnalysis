@@ -74,8 +74,13 @@ adımlarını uygulamak için bir standart olarak kabul edilir.
 
 ### Modelin Değerlendirilmesi
 **Hata Matrisi**
-[93 12]
-[19 55]
+
+$$
+A = \begin{bmatrix}
+93 & 12 \\
+19 & 55 \\
+\end{bmatrix}
+$$
 
 -   Model, hayatta kalamayan 93 kişiyi ve hayatta kalan 55 kişiyi doğru sınıflandırmıştır.
 
