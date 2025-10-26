@@ -91,13 +91,13 @@ $$
 
 **Sınıflandırma Raporu:**
 
--    precision    recall    f1-score    support
+| Survived| precision | recall | f1-score | support |
+|---|---|---|---|---|
+| 0| 0.83 |  0.89 |0.86  |105 |
+| 1 | 0.82 | 0.74|0.78 |74 |
 
-- 0  0.83         0.89      0.86        105
 
-- 1  0.82         0.74      0.78        74
-
-    -   Rapor, modelin hayatta kalamayanları tespit etmede (recall=0.89)
+-   Rapor, modelin hayatta kalamayanları tespit etmede (recall=0.89)
         daha başarılı olduğunu, ancak hayatta kalanları tespit etmede
         (recall=0.74) biraz daha zayıf kaldığını göstermektedir.
 
