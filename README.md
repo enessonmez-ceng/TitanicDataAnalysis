@@ -46,25 +46,22 @@ adımlarını uygulamak için bir standart olarak kabul edilir.
 
 **1.Eksik Değerler**
 - 'Cabin' sütununda çok fazla eksik değer olduğu için modellemeye dahil edilmedi.
--   Veri setinde 'Embarked' sütunundaki eksik değerler için en çok tekrar eden veriyle değiştirildi(mod işlemi).
--   'Age' sütunundaki eksik değerleri doldurmak için tüm yolcuların ortalama yaşını kullanmak yerine 3 farklı 'pclass' için yaş ortalaması alıp yolcu hangi böümdeyse o bölümün yaş ortalaması kullanıldı.Böylece eksik veriler daha doğru bir biçimde dolduruldu.  
-
-
-
+- 'Embarked' sütunundaki eksik değerler en çok tekrar eden veriyle değiştirildi(mod işlemi).
+- 'Age' sütunundaki eksik değerleri doldurmak için tüm yolcuların ortalama yaşını kullanmak yerine 3 farklı 'pclass' için yaş ortalaması alınıp yolcuların 'pclass' larına göre yaş ortalaması kullanıldı.Böylece eksik veriler daha doğru bir biçimde dolduruldu.  
 
 **2.Aykırı Değerler**
 
--   'Age' ve 'Fare' sütunlarındaki değerlerin aralığı geniş , aykırı değerlerin fazla olduğu tespit edildi. Bu yüzden **capping(baskılama)** metodu kullanılarak alt ve üst sınırlar belirlendi.
+-   'Age' ve 'Fare' sütunlarındaki değerlerin; aralığı geniş , aykırı değerlerin fazla olduğu tespit edildi. Bu yüzden **capping(baskılama)** metodu kullanılarak alt ve üst sınırlar belirlendi.
 -   'Age' sütunu için aykırı değer sınırları: Alt=-0.50, Üst=59.50
 -   'Fare' sütunu için aykırı değer sınırları: Alt=-26.72, Üst=65.63
--   **Not** : Alt değerin negatif bir değer çıkması, her iki verinin de minimum *0* değerini alabileceği için herhangi bir yanlış hesaplamaya yol açmaz.
+-   **Not** : Alt değerin negatif bir değer çıkması, her iki verinin de minimum *0* değerini alabileceği için herhenagi bir yanlışlık yoktur.
 
 **3.Özellik Mühendsiliği**
--    'SibSp' ve 'Parch' sütunlarını birleştirerek 'FamilySize' (Aile Büyüklüğü) adında yeni bir sütun oluşturarak *Multicollinearity* probleminin önüne geçmeye çalışıldı.'FamilySize' sütunundaki verilerden yola çıkarak yolcuların yalnız seyahat etme durumunu gösteren 'IsAlone' sütunu oluşturuldu. 
+-    'SibSp' ve 'Parch' sütunlarını birleştirerek 'FamilySize' (Aile Büyüklüğü) adında yeni bir sütun oluşturarak *Multicollinearity* probleminin önüne geçmeye çalışıldı.'FamilySize' sütunundaki verilerden yola çıkarak yolcuların yalnız seyahat etme durumunu gösteren 'IsAlone' sütunu oluşturuldu. Bu sayede yalnız yolculuk etmenin hayatta kalma durumuna etkisi de incelenmiş olacak.
 
 **4.Kategorik Değişkenleri Sayısal Değerlere Çevirme**
 - Makine öğrenmesi modelleri sadece sayısal değerlerle hesaplama yapabildiği için hesaplamalarda kullanacağımız tüm sütunların sayısal veriden oluşması gerekir.
-- Bu yüzden 'Sex' sütunundaki değerler("female": *0*, "male": *1*) ve 'Embarked' sütunundaki değerler sayısal değerlere çevrildi("C": *0*, "S": *1*, "Q": *2*).
+- Bu yüzden 'Sex' sütunundaki değerler("female": *0*, "male": *1*) ve 'Embarked' sütunundaki değerler("C": *0*, "S": *1*, "Q": *2*) sayısal değerlere çevrildi.
 
 
 ## 🤖 Model Eğitimi
