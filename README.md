@@ -1,5 +1,5 @@
 
-**Titanic: Hayatta Kalma Tahmini Projesi**
+# Titanic: Hayatta Kalma Tahmini Projesi
 
 Bu proje, Kaggle'ın "Titanic - Machine Learning from Disaster" veri seti
 kullanılarak gerçekleştirilmiş bir veri analizi ve makine öğrenmesi
@@ -7,7 +7,7 @@ kullanılarak gerçekleştirilmiş bir veri analizi ve makine öğrenmesi
 yolcunun hayatta kalıp kalmayacağını tahmin eden bir model
 geliştirmektir.
 
-**Veri Setinin Hikayesi**
+## Veri Setinin Hikayesi
 
 Bu proje, 15 Nisan 1912'de bir buzdağına çarparak batan RMS Titanic
 gemisinin yolcu verilerini kullanmaktadır. Veri seti, hangi yolcuların
@@ -19,7 +19,7 @@ etkisini analiz etmek için zengin bir zemin sunar. Bu veri seti,
 genellikle sınıflandırma problemlerine giriş yapmak ve temel veri bilimi
 adımlarını uygulamak için bir standart olarak kabul edilir.
 
-**Veri Setindeki Değişkenler**
+## Veri Setindeki Değişkenler
 
 -   Survived: Hedef değişken. Yolcunun hayatta kalıp kalmadığını
     belirtir. (**0** = Hayır, **1** = Evet)
@@ -42,45 +42,75 @@ adımlarını uygulamak için bir standart olarak kabul edilir.
 
 -   Cabin: Yolcunun kabin numarası.
 
-**🔍 Temel Veri Analizi (EDA)**
+## 🔍 Veri Önişleme ve Özellik Mühendisliği
 
-**Özet İstatistikler ve Eksik Değer Analizi**
+**1.Eksik Değerler**
+- 'Cabin' sütununda çok fazla eksik değer olduğu için modellemeye dahil edilmedi.
+-   Veri setinde 'Embarked' sütunundaki eksik değerler için en çok tekrar eden veriyle değiştirildi(mod işlemi).
+-   'Age' sütunundaki eksik değerleri doldurmak için tüm yolcuların ortalama yaşını kullanmak yerine 3 farklı 'pclass' için yaş ortalaması alıp yolcu hangi böümdeyse o bölümün yaş ortalaması kullanıldı.Böylece eksik veriler daha doğru bir biçimde dolduruldu.  
 
-Veri seti ilk yüklendiğinde info() ve describe() metodları ile temel bir
-inceleme yapıldı.
 
--   **Özet İstatistikler:** Yolcuların yaş ortalamasının yaklaşık 29.7
-    olduğu, ancak yaş verilerinde standart sapmanın yüksek olduğu
-    görüldü. Bilet ücretleri (Fare) arasında da ciddi bir dağılım farkı
-    mevcuttu, bu da farklı ekonomik sınıflardaki yolcuları
-    yansıtmaktadır.
 
--   **Eksik Değerler:** En belirgin eksiklikler Age (Yaş) ve Cabin
-    (Kabin) sütunlarındaydı. Cabin sütunundaki eksiklik oranı çok yüksek
-    olduğu için modellemede kullanımı zor olarak değerlendirildi.
-    Embarked sütununda ise çok az sayıda eksik veri tespit edildi.
 
-**Değişken Dağılımları ve Aykırı Değerler**
+**2.Aykırı Değerler**
 
--   **Kategorik Değişkenler:** Yolcuların çoğunluğunun erkek, 3. sınıfta
-    seyahat eden ve Southampton limanından binen kişilerden oluştuğu
-    görüldü.
+-   'Age' ve 'Fare' sütunlarındaki değerlerin aralığı geniş , aykırı değerlerin fazla olduğu tespit edildi. Bu yüzden **capping(baskılama)** metodu kullanılarak alt ve üst sınırlar belirlendi.
+-   'Age' sütunu için aykırı değer sınırları: Alt=-0.50, Üst=59.50
+-   'Fare' sütunu için aykırı değer sınırları: Alt=-26.72, Üst=65.63
+-   **Not** : Alt değerin negatif bir değer çıkması, her iki verinin de minimum *0* değerini alabileceği için herhangi bir yanlış hesaplamaya yol açmaz.
 
--   **Sayısal Değişkenler:** Age dağılımı, en yoğun yolcu grubunun 20-35
-    yaş arası genç yetişkinler olduğunu gösterdi. Fare dağılımı ise sağa
-    çarpık bir yapıdaydı; yani yolcuların büyük çoğunluğu düşük ücretler
-    öderken, çok az sayıda yolcu aşırı yüksek ücretler ödemişti. Bu
-    yüksek ücretler, aykırı değer (outlier) olarak değerlendirilebilecek
-    potansiyele sahipti.
+**3.Özellik Mühendsiliği**
+-    'SibSp' ve 'Parch' sütunlarını birleştirerek 'FamilySize' (Aile Büyüklüğü) adında yeni bir sütun oluşturarak *Multicollinearity* probleminin önüne geçmeye çalışıldı.'FamilySize' sütunundaki verilerden yola çıkarak yolcuların yalnız seyahat etme durumunu gösteren 'IsAlone' sütunu oluşturuldu. 
+
+**4.Kategorik Değişkenleri Sayısal Değerlere Çevirme**
+- Makine öğrenmesi modelleri sadece sayısal değerlerle hesaplama yapabildiği için hesaplamalarda kullanacağımız tüm sütunların sayısal veriden oluşması gerekir.
+- Bu yüzden 'Sex' sütunundaki değerler("female": *0*, "male": *1*) ve 'Embarked' sütunundaki değerler sayısal değerlere çevrildi("C": *0*, "S": *1*, "Q": *2*).
+
+
+## 🤖 Model Eğitimi
+
+-Bu sınıflandırma problemi için temel bir başlangıç modeli olarak **Lojistik Regresyon (LogisticRegression)** tercih edildi.
+- Veri seti kaggle'dan indirdiğimiz haliyle zaten train ve test olarak iki ayrı csv dosyasına sahip olmasına rağmen bu haliyle kullanılmamış, doğrudan **train.csv** dosaysındaki veriler python kodunda 60/40 oranında manuel olarak eğitim ve test verisi olarak ayrılmıştır.
+
+### Modelin Değerlendirilmesi
+**Hata Matrisi**
+[93 12]
+[19 55]
+
+-   Model, hayatta kalamayan 93 kişiyi ve hayatta kalan 55 kişiyi doğru sınıflandırmıştır.
+
+-   Hayatta kalan 19 kişiyi yanlışlıkla "hayatta kalamaz" olarak  tahmin etmiştir.
+
+**Doğruluk Oranı(Accuracy)** : **0.83**
+- Model, test verisindeki yolcuların %83'ünün hayatta kalıp kalmayacağını doğru tahmin etmiştir.
+
+**Sınıflandırma Raporu:**
+
+-    precision    recall    f1-score    support
+
+- 0  0.83         0.89      0.86        105
+
+- 1  0.82         0.74      0.78        74
+
+    -   Rapor, modelin hayatta kalamayanları tespit etmede (recall=0.89)
+        daha başarılı olduğunu, ancak hayatta kalanları tespit etmede
+        (recall=0.74) biraz daha zayıf kaldığını göstermektedir.
+
+**Modelin Değerlendirmesi**
+
+Elde edilen **%83 doğruluk oranı**, Lojistik Regresyon gibi basit bir
+model için oldukça başarılı bir sonuçtur. Model, özellikle bir yolcunun
+sosyo-ekonomik durumu (Pclass) ve cinsiyeti (Sex) gibi güçlü
+göstergelere dayanarak tutarlı tahminler yapabilmektedir. Modelin en
+büyük zayıflığı, hayatta kalan bazı yolcuları tespit edememesidir (düşük
+recall değeri). Bu durum, hayatta kalmanın daha karmaşık ve modelin
+yakalayamadığı başka faktörlere de bağlı olabileceğini düşündürmektedir.
+
+
 
 **📊 Veri Görselleştirme**
 
-Proje kapsamında veri içindeki desenleri ve ilişkileri daha iyi anlamak
-için çeşitli görselleştirmeler yapıldı:
-
--   **Tek Değişkenli Analiz:** Age ve Fare için **histogramlar**
-    kullanılarak dağılımları incelendi. Sex, Pclass ve Embarked için ise
-    **bar grafikleri** ile yolcu sayıları görselleştirildi.
+Proje kapsamında **visualization.py** dosyasında çeşitli görselleştirmeler yapıldı:
 
 -   **Çok Değişkenli Analiz:**
 
@@ -98,106 +128,9 @@ için çeşitli görselleştirmeler yapıldı:
         çocukların hayatta kalma oranının diğer yaş gruplarına göre daha
         yüksek olduğunu gösterdi.
 
-**🧹 Veri Ön İşleme**
 
-Modeli eğitmeden önce veri seti üzerinde aşağıdaki ön işleme adımları
-uygulandı:
-
--   **Eksik Verileri Doldurma:**
-
-    -   Age sütunundaki eksik değerler, yolcu sınıflarına göre medyan
-        yaş değeri ile dolduruldu.
-
-    -   Embarked sütunundaki çok az sayıdaki eksik veri, en sık görülen
-        liman (mod) ile dolduruldu.
-
-    -   Cabin sütunu, aşırı eksik veri içerdiği için modelden çıkarıldı.
-
--   **Kategorik Değişkenlerin Dönüştürülmesi (Encoding):**
-
-    -   Sex ve Embarked gibi kategorik değişkenler, modelin
-        anlayabileceği sayısal formata dönüştürmek için **One-Hot
-        Encoding** tekniği ile işlendi.
-
--   **Özellik Mühendisliği (Feature Engineering):**
-
-    -   SibSp ve Parch sütunları birleştirilerek FamilySize adında yeni
-        bir özellik türetildi.
-
-**🤖 Basit Bir Modelleme**
-
-**Model ve Değerlendirme Yöntemi**
-
-Bu sınıflandırma problemi için temel bir başlangıç modeli olarak
-**Lojistik Regresyon (LogisticRegression)** tercih edildi. Modelin
-performansını objektif bir şekilde ölçmek için veri seti, **%80 eğitim**
-ve **%20 test** seti olacak şekilde ikiye ayrıldı. Model eğitim
-verileriyle eğitildi ve daha önce görmediği test verileri üzerinde
-değerlendirildi.
-
-**Başarı Metrikleri**
-
-Test seti üzerinde elde edilen sonuçlar aşağıdaki gibidir:
-
--   **Doğruluk Oranı (Accuracy):** **0.80**
-
-    -   Model, test verisindeki yolcuların %80'inin hayatta kalıp
-        kalmayacağını doğru tahmin etmiştir.
-
--   **Hata Matrisi (Confusion Matrix):**
-
--   \[\[91 14\]
-
--   \[21 53\]\]
-
-    -   Model, hayatta kalamayan 91 kişiyi ve hayatta kalan 53 kişiyi
-        doğru sınıflandırmıştır.
-
-    -   Hayatta kalan 21 kişiyi yanlışlıkla "hayatta kalamaz" olarak
-        tahmin etmiştir.
-
--   **Sınıflandırma Raporu:**
-
--   precision recall f1-score support
-
--   0 (Kalamadı) 0.81 0.87 0.84 105
-
--   1 (Kaldı) 0.79 0.72 0.75 74
-
-    -   Rapor, modelin hayatta kalamayanları tespit etmede (recall=0.87)
-        daha başarılı olduğunu, ancak hayatta kalanları tespit etmede
-        (recall=0.72) biraz daha zayıf kaldığını göstermektedir.
-
-**📈 Sonuçların Yorumlanması**
-
-**Modelin Değerlendirmesi**
-
-Elde edilen **%80 doğruluk oranı**, Lojistik Regresyon gibi basit bir
-model için oldukça başarılı bir sonuçtur. Model, özellikle bir yolcunun
-sosyo-ekonomik durumu (Pclass) ve cinsiyeti (Sex) gibi güçlü
-göstergelere dayanarak tutarlı tahminler yapabilmektedir. Modelin en
-büyük zayıflığı, hayatta kalan bazı yolcuları tespit edememesidir (düşük
-recall değeri). Bu durum, hayatta kalmanın daha karmaşık ve modelin
-yakalayamadığı başka faktörlere de bağlı olabileceğini düşündürmektedir.
-
-**Ne Öğrenildi?**
-
-Bu proje, bir veri bilimi projesinin temel yaşam döngüsünü deneyimlemek
-için harika bir fırsat sundu.
-
-1.  **Veri Keşfinin Gücü:** Veriyi görselleştirmenin, ham sayılarda
-    gizli olan sosyal dinamikleri (örn: sınıf ve cinsiyetin önemi) nasıl
-    ortaya çıkardığını öğrendim.
-
-2.  **Ön İşlemenin Önemi:** Bir makine öğrenmesi modelinin başarısının,
-    büyük ölçüde verinin ne kadar iyi temizlendiği ve hazırlandığına
-    bağlı olduğunu anladım.
-
-3.  **Metriklerin Dili:** Doğruluk oranının ötesinde precision ve recall
-    gibi metriklerin, bir modelin güçlü ve zayıf yönlerini nasıl daha
-    detaylı anlattığını tecrübe ettim.
-
-4.  **Tarihsel Veriden Anlam Çıkarma:** Son olarak, bu çalışma, tarihsel
-    bir veri setinin modern analitik tekniklerle nasıl
-    incelenebileceğini ve insan davranışları hakkında nasıl anlamlı
-    sonuçlar çıkarılabileceğini gösterdi.
+**Projenin bana kattıkları**
+- Bu projede veri önişleme adımlarını doğru sırayla uygulayarak veri setini adeta *modelin anlayacağı dile* dönüştürmeyi öğrendim.
+- Yaş,cinsyet gibi kategorik verilerin hayatta kalma oranına nasıl bir etkisi olduğunu görselleştirme yaparak analiz etmeyi kavradım.
+- Lineer regresyon modeliyle yolcuların *hayatta kalma* durumunu tahmin etmeye çalıştım.
+- Genel olarak baktığımda veri bilimi alanında ilk mini projemi gerçekleştirdim diyebilirm.
