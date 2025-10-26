@@ -76,7 +76,7 @@ adımlarını uygulamak için bir standart olarak kabul edilir.
 **Hata Matrisi**
 
 $$
-A = \begin{bmatrix}
+Hata Matrisi = \begin{bmatrix}
 93 & 12 \\
 19 & 55 \\
 \end{bmatrix}
